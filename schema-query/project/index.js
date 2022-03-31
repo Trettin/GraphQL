@@ -5,9 +5,19 @@ const typeDefs = gql`
 
   scalar Date
 
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+    age: Int
+    salary: Float
+    vip: Boolean
+  }
+
   type Query {
     hello: String!
-    currentHour: Date
+    currentHour: Date!
+    loggedUser: User!
   }
 `;
 
@@ -18,6 +28,16 @@ const resolvers = {
     },
     currentHour() {
       return new Date();
+    },
+    loggedUser() {
+      return {
+        id: 1,
+        name: "Ana",
+        email: "ana@gmail.com",
+        age: 28,
+        salary: 2000.5,
+        vip: true,
+      };
     },
   },
 };
