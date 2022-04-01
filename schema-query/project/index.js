@@ -20,7 +20,7 @@ const typeDefs = gql`
     discount: Int
     priceWithDiscount: Float
   }
-
+  # Only queries that return a scalar can be called without {brackets}
   type Query {
     hello: String!
     currentHour: Date!
@@ -37,7 +37,11 @@ const resolvers = {
   },
   Product: {
     priceWithDiscount(product) {
-      return (product.price * ((100 - product.discount) / 100)).toFixed(2);
+      if (product.discount) {
+        return (product.price * ((100 - product.discount) / 100)).toFixed(2);
+      } else {
+        return product.price;
+      }
     },
   },
   // Query is the first entry and the methods have no params
@@ -62,7 +66,7 @@ const resolvers = {
       return {
         name: "Ball",
         price: 19.99,
-        discount: 10,
+        discount: 15,
       };
     },
   },
