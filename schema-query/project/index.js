@@ -6,18 +6,32 @@ const users = [
     name: "João Silva",
     email: "jsilva@zmail.com",
     age: 29,
+    profile_id: 1,
   },
   {
     id: 2,
     name: "Rafael Junior",
     email: "rafajun@zmail.com",
     age: 31,
+    profile_id: 2,
   },
   {
     id: 3,
     name: "Daniela Smith",
     email: "danismi@zmail.com",
     age: 24,
+    profile_id: 1,
+  },
+];
+
+const profiles = [
+  {
+    name: "Common",
+    id: 1,
+  },
+  {
+    name: "Adm",
+    id: 2,
   },
 ];
 
@@ -33,6 +47,12 @@ const typeDefs = gql`
     age: Int
     salary: Float
     vip: Boolean
+    profile: Profile
+  }
+
+  type Profile {
+    name: String!
+    id: ID!
   }
 
   type Product {
@@ -51,6 +71,8 @@ const typeDefs = gql`
     lotteryNumbers: [Int!]!
     users: [User]
     user(id: ID): User
+    profiles: [Profile]
+    profile(id: ID): Profile
   }
 `;
 
@@ -58,6 +80,9 @@ const resolvers = {
   User: {
     salary(user) {
       return user.salary_in_real;
+    },
+    profile(user) {
+      return profiles.find((profile) => user.profile_id === profile.id);
     },
   },
   Product: {
@@ -106,6 +131,12 @@ const resolvers = {
     // The first param of a resolver inside Query is always null because it is a entry point but if the resolver were not in Query it would be the object that was return by another resolver, the parent resolver.
     user(_, { id }) {
       return users.find((user) => user.id.toString() === id);
+    },
+    profiles() {
+      return profiles;
+    },
+    profile(_, { id }) {
+      return profiles.find((user) => user.id.toString() === id);
     },
   },
 };
