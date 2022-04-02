@@ -1,5 +1,26 @@
 const { ApolloServer, gql } = require("apollo-server");
 
+const users = [
+  {
+    id: 1,
+    name: "João Silva",
+    email: "jsilva@zmail.com",
+    idade: 29,
+  },
+  {
+    id: 2,
+    name: "Rafael Junior",
+    email: "rafajun@zmail.com",
+    idade: 31,
+  },
+  {
+    id: 3,
+    name: "Daniela Smith",
+    email: "danismi@zmail.com",
+    idade: 24,
+  },
+];
+
 const typeDefs = gql`
   # Api entry points!
 
@@ -26,6 +47,7 @@ const typeDefs = gql`
     currentHour: Date!
     loggedUser: User!
     highlightedProduct: Product!
+    lotteryNumbers: [Int!]!
   }
 `;
 
@@ -68,6 +90,12 @@ const resolvers = {
         price: 19.99,
         discount: 15,
       };
+    },
+    lotteryNumbers() {
+      return Array(6)
+        .fill()
+        .map(() => parseInt(Math.random() * 60 + 1))
+        .sort((a, b) => a - b);
     },
   },
 };
