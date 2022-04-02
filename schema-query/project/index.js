@@ -5,19 +5,19 @@ const users = [
     id: 1,
     name: "João Silva",
     email: "jsilva@zmail.com",
-    idade: 29,
+    age: 29,
   },
   {
     id: 2,
     name: "Rafael Junior",
     email: "rafajun@zmail.com",
-    idade: 31,
+    age: 31,
   },
   {
     id: 3,
     name: "Daniela Smith",
     email: "danismi@zmail.com",
-    idade: 24,
+    age: 24,
   },
 ];
 
@@ -41,6 +41,7 @@ const typeDefs = gql`
     discount: Int
     priceWithDiscount: Float
   }
+
   # Only queries that return a scalar can be called without {brackets}
   type Query {
     hello: String!
@@ -48,6 +49,8 @@ const typeDefs = gql`
     loggedUser: User!
     highlightedProduct: Product!
     lotteryNumbers: [Int!]!
+    users: [User]
+    user(id: ID): User
   }
 `;
 
@@ -96,6 +99,13 @@ const resolvers = {
         .fill()
         .map(() => parseInt(Math.random() * 60 + 1))
         .sort((a, b) => a - b);
+    },
+    users() {
+      return users;
+    },
+    // The first param of a resolver inside Query is always null because it is a entry point but if the resolver were not in Query it would be the object that was return by another resolver, the parent resolver.
+    user(_, { id }) {
+      return users.find((user) => user.id.toString() === id);
     },
   },
 };
