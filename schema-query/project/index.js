@@ -1,4 +1,5 @@
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer } = require("apollo-server");
+const { importSchema } = require("graphql-import");
 
 const users = [
   {
@@ -34,47 +35,6 @@ const profiles = [
     id: 2,
   },
 ];
-
-const typeDefs = gql`
-  # Api entry points!
-
-  scalar Date
-
-  type User {
-    id: ID!
-    name: String!
-    email: String!
-    age: Int
-    salary: Float
-    vip: Boolean
-    profile: Profile
-  }
-
-  type Profile {
-    name: String!
-    id: ID!
-  }
-
-  type Product {
-    name: String!
-    price: Float!
-    discount: Int
-    priceWithDiscount: Float
-  }
-
-  # Only queries that return a scalar can be called without {brackets}
-  type Query {
-    hello: String!
-    currentHour: Date!
-    loggedUser: User!
-    highlightedProduct: Product!
-    lotteryNumbers: [Int!]!
-    users: [User]
-    user(id: ID): User
-    profiles: [Profile]
-    profile(id: ID): Profile
-  }
-`;
 
 const resolvers = {
   User: {
@@ -142,7 +102,7 @@ const resolvers = {
 };
 
 const server = new ApolloServer({
-  typeDefs,
+  typeDefs: importSchema("./schema/index.graphql"),
   resolvers,
 });
 
