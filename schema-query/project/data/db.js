@@ -5,6 +5,7 @@ const users = [
     email: "jsilva@zmail.com",
     age: 29,
     profile_id: 1,
+    status: "ACTIVE",
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ const users = [
     email: "rafajun@zmail.com",
     age: 31,
     profile_id: 2,
+    status: "INACTIVE",
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ const users = [
     email: "danismi@zmail.com",
     age: 24,
     profile_id: 1,
+    status: "BLOCKED",
   },
 ];
 
