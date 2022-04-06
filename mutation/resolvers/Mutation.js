@@ -1,12 +1,14 @@
 const { users, nextId } = require("../data/db");
 
 module.exports = {
-  newUser(_, { name, email, age }) {
+  newUser(_, args) {
+    const emailExists = users.some((user) => user.email === args.email);
+
+    if (emailExists) throw new Error("Email already exists");
+
     const nextUser = {
       id: nextId(),
-      name,
-      email,
-      age,
+      ...args,
       profile_id: 1,
       status: "ACTIVE",
     };
