@@ -3,7 +3,6 @@ type Query {
   hello: String!
   currentHour: Date!
   loggedUser: User!
-  highlightedProduct: Product!
   lotteryNumbers: [Int!]!
   users: [User]
   user(id: ID): User

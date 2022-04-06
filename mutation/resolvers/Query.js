@@ -17,13 +17,6 @@ module.exports = {
       vip: true,
     };
   },
-  highlightedProduct() {
-    return {
-      name: "Ball",
-      price: 19.99,
-      discount: 15,
-    };
-  },
   lotteryNumbers() {
     return Array(6)
       .fill()
