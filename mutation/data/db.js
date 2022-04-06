@@ -1,6 +1,11 @@
+let id = 1;
+const nextId = () => {
+  return id++;
+};
+
 const users = [
   {
-    id: 1,
+    id: nextId(),
     name: "João Silva",
     email: "jsilva@zmail.com",
     age: 29,
@@ -8,7 +13,7 @@ const users = [
     status: "ACTIVE",
   },
   {
-    id: 2,
+    id: nextId(),
     name: "Rafael Junior",
     email: "rafajun@zmail.com",
     age: 31,
@@ -16,7 +21,7 @@ const users = [
     status: "INACTIVE",
   },
   {
-    id: 3,
+    id: nextId(),
     name: "Daniela Smith",
     email: "danismi@zmail.com",
     age: 24,
@@ -39,4 +44,5 @@ const profiles = [
 module.exports = {
   users,
   profiles,
+  nextId,
 };
