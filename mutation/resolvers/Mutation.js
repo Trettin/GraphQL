@@ -17,4 +17,23 @@ module.exports = {
 
     return nextUser;
   },
+  deleteUser(_, { id }) {
+    const i = users.findIndex((u) => u.id === id);
+    if (i < 0) return null;
+
+    const excluded = users.splice(i, 1);
+    return excluded[0] || null;
+  },
+  updateUser(_, args) {
+    const i = users.findIndex((u) => u.id === args.id);
+    if (i < 0) return null;
+
+    const user = {
+      ...users[i],
+      ...args,
+    };
+
+    users.splice(i, 1, user);
+    return user;
+  },
 };
