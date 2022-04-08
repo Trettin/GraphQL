@@ -1,14 +1,14 @@
 const { users, nextId } = require("../data/db");
 
 module.exports = {
-  newUser(_, args) {
-    const emailExists = users.some((user) => user.email === args.email);
+  newUser(_, { data }) {
+    const emailExists = users.some((user) => user.email === data.email);
 
     if (emailExists) throw new Error("Email already exists");
 
     const nextUser = {
       id: nextId(),
-      ...args,
+      ...data,
       profile_id: 1,
       status: "ACTIVE",
     };
@@ -17,6 +17,7 @@ module.exports = {
 
     return nextUser;
   },
+
   deleteUser(_, { id }) {
     const i = users.findIndex((u) => u.id === id);
     if (i < 0) return null;

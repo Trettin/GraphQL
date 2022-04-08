@@ -1,6 +1,6 @@
 type Mutation {
   # Comma is optional
-  newUser(name: String, email: String, age: Int): User!
+  newUser(data: UserInput!): User!
   deleteUser(id: Int!): User
   updateUser(id: Int!, name: String, email: String, age: Int): User
 }
