@@ -1,5 +1,19 @@
 const { users, nextId } = require("../data/db");
 
+function userIndex(filter) {
+  if (!filter) return -1;
+
+  const { id, email } = filter;
+
+  if (id) {
+    return users.findIndex((u) => u.id === id);
+  } else if (email) {
+    return users.findIndex((u) => u.email === email);
+  }
+
+  return -1;
+}
+
 module.exports = {
   newUser(_, { data }) {
     const emailExists = users.some((user) => user.email === data.email);
@@ -18,13 +32,14 @@ module.exports = {
     return nextUser;
   },
 
-  deleteUser(_, { id }) {
-    const i = users.findIndex((u) => u.id === id);
+  deleteUser(_, { filter }) {
+    const i = userIndex(filter);
     if (i < 0) return null;
 
     const excluded = users.splice(i, 1);
     return excluded[0] || null;
   },
+
   updateUser(_, args) {
     const i = users.findIndex((u) => u.id === args.id);
     if (i < 0) return null;
