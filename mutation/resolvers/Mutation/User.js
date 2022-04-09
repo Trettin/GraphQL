@@ -1,4 +1,4 @@
-const { users, nextId } = require("../data/db");
+const { users, nextId } = require("../../data/db");
 
 function userIndex(filter) {
   if (!filter) return -1;
@@ -40,13 +40,13 @@ module.exports = {
     return excluded[0] || null;
   },
 
-  updateUser(_, args) {
-    const i = users.findIndex((u) => u.id === args.id);
+  updateUser(_, { filter, data }) {
+    const i = userIndex(filter);
     if (i < 0) return null;
 
     const user = {
       ...users[i],
-      ...args,
+      ...data,
     };
 
     users.splice(i, 1, user);

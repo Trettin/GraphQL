@@ -2,5 +2,8 @@ type Mutation {
   # Comma is optional
   newUser(data: UserInput!): User!
   deleteUser(filter: UserFilter): User
-  updateUser(id: Int!, name: String, email: String, age: Int): User
+  updateUser(filter: UserFilter, data: UserInput): User
+  newProfile(name: String): Profile
+  deleteProfile(id: Int): Profile
+  updateProfile(id: Int, name: String): Profile
 }

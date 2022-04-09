@@ -1,9 +1,5 @@
 # Only queries that return a scalar can be called without {brackets}
 type Query {
-  hello: String!
-  currentHour: Date!
-  loggedUser: User!
-  lotteryNumbers: [Int!]!
   users: [User]
   user(id: ID): User
   profiles: [Profile]

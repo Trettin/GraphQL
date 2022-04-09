@@ -3,6 +3,11 @@ const nextId = () => {
   return id++;
 };
 
+let profileId = 1;
+const nextProfileId = () => {
+  return profileId++;
+};
+
 const users = [
   {
     id: nextId(),
@@ -33,11 +38,11 @@ const users = [
 const profiles = [
   {
     name: "Common",
-    id: 1,
+    id: nextProfileId(),
   },
   {
     name: "Adm",
-    id: 2,
+    id: nextProfileId(),
   },
 ];
 
@@ -45,4 +50,5 @@ module.exports = {
   users,
   profiles,
   nextId,
+  nextProfileId,
 };
