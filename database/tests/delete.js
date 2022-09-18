@@ -11,5 +11,3 @@ const db = require("../config/db");
 //   .delete()
 //   .then((res) => console.log(res))
 //   .finally(() => db.destroy());
-
-//testing gall alias
