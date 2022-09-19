@@ -5,7 +5,6 @@ module.exports = {
     return await db("users");
   },
   async user(_, { filter: { id, email } }) {
-    // implementar
     if (id && id > 0) {
       return await db("users").where({ id }).first();
     } else if (email) {
