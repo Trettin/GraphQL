@@ -5,10 +5,14 @@ module.exports = {
     return await db("profiles");
   },
   async profile(_, { filter: { id, name } }) {
-    if (id && id > 0) {
-      return await db("profiles").where({ id }).first();
-    } else {
-      return await db("profiles").where({ name }).first();
-    }
+    return await db("profiles")
+      .where((builder) => {
+        if (id && id > 0) {
+          builder.where({ id });
+        } else {
+          builder.where({ name });
+        }
+      })
+      .first();
   },
 };
