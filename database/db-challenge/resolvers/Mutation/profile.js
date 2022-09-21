@@ -23,7 +23,24 @@ module.exports = {
   },
 
   async deleteProfile(_, { filter }) {
-    // implementar
+    if (!filter || (!filter.id && !filter.name))
+      throw new Error("Please send the Profile Id or Email");
+
+    try {
+      const profile_ = await profile(_, { filter });
+
+      if (!profile_)
+        throw new Error(
+          "This Profile doesn't exist. Please verify the Id or Neme."
+        );
+
+      await db("users_profiles").where({ profile_id: profile_.id }).delete();
+      await db("profiles").where({ id: profile_.id }).delete();
+
+      return profile_;
+    } catch (error) {
+      throw new Error(error);
+    }
   },
   async updateProfile(_, { filter, data }) {
     // implementar

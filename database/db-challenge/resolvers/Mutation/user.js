@@ -75,7 +75,7 @@ module.exports = {
 
   async updateUser(_, { filter, data }) {
     if (!filter || (!filter.id && !filter.email))
-      new Error("Please send a user Id or Email");
+      throw new Error("Please send a user Id or Email");
 
     const { profiles, ...dataToUpdate } = data;
 
