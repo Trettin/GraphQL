@@ -1,5 +1,5 @@
 const db = require("../../config/db");
-const { profiles: getUserProfiles } = require("../Type/User");
+const { user: getUser } = require("../Query/User");
 
 module.exports = {
   async newUser(_, { data: { name, email, password, profiles } }) {
@@ -60,9 +60,46 @@ module.exports = {
     return { ...user, profiles: userProfiles };
   },
   async deleteUser(_, { filter }) {
-    // implement
+    try {
+      const user = await getUser(_, { filter });
+      if (user) {
+        const { id } = user;
+        await db("users_profiles").where({ user_id: id }).delete();
+        await db("users").where({ id }).delete();
+      }
+      return user;
+    } catch (e) {
+      throw new Error(e.sqlMessage);
+    }
   },
+
   async updateUser(_, { filter, data }) {
-    // implement
+    if (!filter || (!filter.id && !filter.email))
+      new Error("Please send a user Id or Email");
+
+    const { profiles, ...dataToUpdate } = data;
+
+    try {
+      const user = await getUser(_, { filter });
+      if (user) {
+        const { id } = user;
+
+        if (profiles) {
+          await db("users_profiles").where({ user_id: id }).delete();
+
+          for (let profile of profiles) {
+            await db("users_profiles")
+              .where({ user_id: id })
+              .insert({ user_id: id, profile_id: profile.id });
+          }
+        }
+        await db("users")
+          .where({ id })
+          .update({ ...dataToUpdate });
+        return await getUser(_, { filter });
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
   },
 };
