@@ -43,6 +43,24 @@ module.exports = {
     }
   },
   async updateProfile(_, { filter, data }) {
-    // implementar
+    if (!filter || (!filter.id && !filter.name))
+      throw new Error("Please send the Profile Id or Name");
+
+    try {
+      const profile_ = await profile(_, { filter });
+
+      if (!profile_)
+        throw new Error(
+          "This Profile doesn't exist. Please verify the Id or Neme."
+        );
+
+      await db("profiles")
+        .where({ id: profile_.id })
+        .update({ ...data });
+
+      return await profile(_, { filter: { id: profile_.id } });
+    } catch (e) {
+      throw new Error(e);
+    }
   },
 };
