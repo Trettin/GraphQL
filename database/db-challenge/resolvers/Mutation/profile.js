@@ -57,7 +57,7 @@ module.exports = {
       await db("profiles")
         .where({ id: profile_.id })
         .update({ ...data });
-
+      //  oi
       return await profile(_, { filter: { id: profile_.id } });
     } catch (e) {
       throw new Error(e);
